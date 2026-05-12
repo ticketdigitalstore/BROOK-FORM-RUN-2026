@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Form Registrasi Event Lari</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#081b29,#0f3d5e,#0a2239);
+    min-height:100vh;
+    overflow-x:hidden;
+    color:white;
+}
+
+body::before{
+    content:'';
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle,#00f7ff55,transparent);
+    top:-250px;
+    left:-250px;
+    animation:rotateGlow 12s linear infinite;
+    z-index:-1;
+}
+
+body::after{
+    content:'';
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle,#00ff8855,transparent);
+    bottom:-250px;
+    right:-250px;
+    animation:rotateGlow 15s linear infinite reverse;
+    z-index:-1;
+}
+
+@keyframes rotateGlow{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+.container{
+    width:95%;
+    max-width:850px;
+    margin:40px auto;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 0 40px rgba(0,0,0,0.5);
+    animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.header{
+    padding:20px;
+    text-align:center;
+    background:linear-gradient(90deg,#00c6ff,#0072ff);
+    position:relative;
+}
+
+.header h1{
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+.timer{
+    margin-top:10px;
+    font-size:18px;
+    font-weight:600;
+    color:#ffe600;
+}
+
+.page{
+    display:none;
+    padding:30px;
+    animation:slidePage .6s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes slidePage{
+    from{
+        opacity:0;
+        transform:translateX(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+.banner{
+    width:100%;
+    border-radius:18px;
+    margin-bottom:25px;
+    border:3px solid rgba(255,255,255,0.2);
+    box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#fff;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select{
+    width:100%;
+    padding:14px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    background:rgba(255,255,255,0.12);
+    color:white;
+    font-size:15px;
+    border:2px solid transparent;
+    transition:0.3s;
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus{
+    border-color:#00f7ff;
+    box-shadow:0 0 15px #00f7ff88;
+}
+
+textarea{
+    resize:none;
+    height:100px;
+}
+
+.radio-group{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.radio-group label{
+    background:rgba(255,255,255,0.12);
+    padding:12px 20px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.radio-group input{
+    margin-right:8px;
+}
+
+.radio-group label:hover{
+    background:#00c6ff;
+}
+
+.button-group{
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+    gap:15px;
+}
+
+button{
+    flex:1;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-back{
+    background:#555;
+    color:white;
+}
+
+.btn-next{
+    background:linear-gradient(90deg,#00ffae,#00c6ff);
+    color:#081b29;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+button:disabled{
+    opacity:0.4;
+    cursor:not-allowed;
+    transform:none;
+    box-shadow:none;
+}
+
+.qris-box{
+    border:3px dashed #00f7ff;
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+    margin-bottom:20px;
+    background:rgba(255,255,255,0.08);
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%{box-shadow:0 0 0 rgba(0,247,255,0.4);}
+    50%{box-shadow:0 0 25px rgba(0,247,255,0.8);}
+    100%{box-shadow:0 0 0 rgba(0,247,255,0.4);}
+}
+
+.qris-box img{
+    width:260px;
+    max-width:100%;
+    margin:15px 0;
+    border-radius:12px;
+    background:white;
+    padding:10px;
+}
+
+.checkbox{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    margin-top:20px;
+}
+
+.checkbox input{
+    margin-top:5px;
+}
+
+.success-box{
+    text-align:center;
+    padding:20px;
+}
+
+.success-box h2{
+    font-size:32px;
+    margin-bottom:15px;
+    color:#00ffae;
+}
+
+.bio{
+    margin-top:30px;
+    background:rgba(255,255,255,0.08);
+    border-radius:20px;
+    padding:25px;
+    text-align:left;
+}
+
+.bio-item{
+    margin-bottom:12px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    padding-bottom:10px;
+}
+
+.failed{
+    text-align:center;
+    padding:50px;
+}
+
+.failed h1{
+    font-size:45px;
+    color:#ff3b3b;
+    margin-bottom:20px;
+}
+
+.failed p{
+    font-size:18px;
+}
+
+@media(max-width:768px){
+    .button-group{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="mainContainer">
+
+    <div class="header">
+        <h1>FORM REGISTRASI EVENT LARI</h1>
+        <div class="timer">
+            Sisa Waktu Pengisian :
+            <span id="countdown">10:00</span>
+        </div>
+    </div>
+
+    <!-- PAGE 1 -->
+    <div class="page active" id="page1">
+
+        <img src="banner.png" class="banner">
+
+        <div class="input-group">
+            <label>Nama Lengkap</label>
+            <input type="text" id="nama" required>
+        </div>
+
+        <div class="input-group">
+            <label>Jenis Kelamin</label>
+            <div class="radio-group">
+                <label><input type="radio" name="gender" value="Laki-laki">Laki-laki</label>
+                <label><input type="radio" name="gender" value="Perempuan">Perempuan</label>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Tempat Lahir</label>
+            <input type="text" id="tempatLahir">
+        </div>
+
+        <div class="input-group">
+            <label>Tanggal Lahir</label>
+            <input type="date" id="tanggalLahir">
+        </div>
+
+        <div class="input-group">
+            <label>Umur</label>
+            <input type="number" id="umur">
+        </div>
+
+        <div class="input-group">
+            <label>Nomor WhatsApp</label>
+            <input type="tel" id="wa">
+        </div>
+
+        <div class="input-group">
+            <label>Email Aktif</label>
+            <input type="email" id="email">
+        </div>
+
+        <div class="input-group">
+            <label>Alamat Lengkap</label>
+            <textarea id="alamat"></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>Kota / Provinsi</label>
+            <input type="text" id="kota">
+        </div>
+
+        <div class="input-group">
+            <label>Upload KTP / Kartu Pelajar</label>
+            <input type="file" id="ktp" accept="image/*,.pdf">
+        </div>
+
+        <div class="button-group">
+            <button class="btn-back" disabled>Kembali</button>
+            <button class="btn-next" id="next1" disabled>Selanjutnya</button>
+        </div>
+
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page" id="page2">
+
+        <h2 style="margin-bottom:20px;">CATEGORY LARI</h2>
+
+        <div class="input-group">
+            <label>Category</label>
+            <select id="category">
+                <option value="">Pilih Category</option>
+                <option>5K</option>
+                <option>10K</option>
+                <option>Half Marathon</option>
+                <option>Marathon</option>
+            </select>
+        </div>
+
+        <img src="size-chart.png" class="banner">
+
+        <div class="input-group">
+            <label>Size Jersey</label>
+            <select id="size">
+                <option value="">Pilih Size</option>
+                <option>XS</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+                <option>XXL</option>
+                <option>XXXL</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Apakah Pernah Mengikuti Event Lari Sebelumnya (Opsional)</label>
+            <select id="pengalaman">
+                <option value="">Pilih</option>
+                <option>Pernah</option>
+                <option>Tidak Pernah</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Nama Komunitas Lari (Opsional)</label>
+            <input type="text" id="komunitas">
+        </div>
+
+        <div class="button-group">
+            <button class="btn-back" onclick="prevPage(1)">Kembali</button>
+            <button class="btn-next" id="next2" disabled>Selanjutnya</button>
+        </div>
+
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page" id="page3">
+
+        <img src="Fee.png" class="banner">
+
+        <div class="qris-box">
+
+            <h2>PEMBAYARAN QRIS</h2>
+
+            <img src="qris-pembayaran.png">
+
+            <p style="margin-top:10px;">
+                Silahkan SCAN Untuk Melakukan Pembayaran Biaya Registrasi Pendaftaran
+                <br>
+                (Masukkan Nominal Sesuai Category Yang Dipilih)
+            </p>
+
+        </div>
+
+        <div class="input-group">
+            <label>Upload Bukti Pembayaran</label>
+            <input type="file" id="bukti" accept="image/*,.pdf">
+        </div>
+
+        <div class="checkbox">
+            <input type="checkbox" id="setuju">
+            <label>
+                ✅ Saya menyatakan bahwa seluruh data yang saya isi benar dan saya siap mengikuti seluruh aturan event.
+            </label>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-back" onclick="prevPage(2)">Kembali</button>
+            <button class="btn-next" id="daftarBtn" disabled>DAFTAR</button>
+        </div>
+
+    </div>
+
+    <!-- PAGE 4 -->
+    <div class="page" id="page4">
+
+        <div class="success-box">
+
+            <h2>TERIMA KASIH!</h2>
+
+            <p>
+                Formulir pendaftaran Anda sedang dalam proses.
+                <br>
+                Silakan tunggu E-mail konfirmasi.
+            </p>
+
+            <div class="bio" id="bioData"></div>
+
+            <div class="button-group" style="margin-top:30px;">
+                <button class="btn-next" onclick="goHome()">BERANDA</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FAILED PAGE -->
+    <div class="page" id="failedPage">
+
+        <div class="failed">
+            <h1>REGISTRASI FAILED</h1>
+            <p>
+                Waktu pengisian formulir telah melebihi 10 menit.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let currentPage = 1;
+
+// ================= TIMER =================
+
+let duration = 600;
+const countdown = document.getElementById("countdown");
+
+const timer = setInterval(() => {
+
+    let minutes = Math.floor(duration / 60);
+    let seconds = duration % 60;
+
+    countdown.innerHTML =
+        `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+
+    if(duration <= 0){
+        clearInterval(timer);
+        showFailedPage();
+    }
+
+    duration--;
+
+},1000);
+
+// ================= PAGE FUNCTION =================
+
+function showPage(page){
+    document.querySelectorAll('.page').forEach(p=>{
+        p.classList.remove('active');
+    });
+
+    document.getElementById('page'+page).classList.add('active');
+}
+
+function nextPage(page){
+    currentPage = page;
+    showPage(page);
+}
+
+function prevPage(page){
+    currentPage = page;
+    showPage(page);
+}
+
+function showFailedPage(){
+    document.querySelectorAll('.page').forEach(p=>{
+        p.classList.remove('active');
+    });
+
+    document.getElementById('failedPage').classList.add('active');
+}
+
+// ================= VALIDASI PAGE 1 =================
+
+const page1Inputs = [
+    "nama","tempatLahir","tanggalLahir","umur",
+    "wa","email","alamat","kota","ktp"
+];
+
+function validatePage1(){
+
+    let valid = true;
+
+    page1Inputs.forEach(id=>{
+        const el = document.getElementById(id);
+
+        if(el.type === "file"){
+            if(el.files.length === 0){
+                valid = false;
+            }
+        }else{
+            if(el.value.trim() === ""){
+                valid = false;
+            }
+        }
+    });
+
+    const genderChecked =
+        document.querySelector('input[name="gender"]:checked');
+
+    if(!genderChecked){
+        valid = false;
+    }
+
+    document.getElementById('next1').disabled = !valid;
+}
+
+document.querySelectorAll('#page1 input, #page1 textarea').forEach(el=>{
+    el.addEventListener('input',validatePage1);
+    el.addEventListener('change',validatePage1);
+});
+
+document.getElementById('next1').addEventListener('click',()=>{
+    nextPage(2);
+});
+
+// ================= VALIDASI PAGE 2 =================
+
+function validatePage2(){
+
+    const category = document.getElementById('category').value;
+    const size = document.getElementById('size').value;
+
+    const valid = category !== "" && size !== "";
+
+    document.getElementById('next2').disabled = !valid;
+}
+
+document.querySelectorAll('#page2 select, #page2 input')
+.forEach(el=>{
+    el.addEventListener('input',validatePage2);
+    el.addEventListener('change',validatePage2);
+});
+
+document.getElementById('next2').addEventListener('click',()=>{
+    nextPage(3);
+});
+
+// ================= VALIDASI PAGE 3 =================
+
+function validatePage3(){
+
+    const bukti =
+        document.getElementById('bukti').files.length > 0;
+
+    const setuju =
+        document.getElementById('setuju').checked;
+
+    document.getElementById('daftarBtn').disabled =
+        !(bukti && setuju);
+}
+
+document.querySelectorAll('#page3 input')
+.forEach(el=>{
+    el.addEventListener('change',validatePage3);
+});
+
+document.getElementById('daftarBtn')
+.addEventListener('click',()=>{
+
+    generateBio();
+
+    nextPage(4);
+});
+
+// ================= GENERATE BIODATA =================
+
+function generateBio(){
+
+    const gender =
+        document.querySelector('input[name="gender"]:checked').value;
+
+    const html = `
+        <h3 style="margin-bottom:20px;">BIODATA PESERTA</h3>
+
+        <div class="bio-item"><b>Nama :</b> ${document.getElementById('nama').value}</div>
+        <div class="bio-item"><b>Jenis Kelamin :</b> ${gender}</div>
+        <div class="bio-item"><b>Tempat Lahir :</b> ${document.getElementById('tempatLahir').value}</div>
+        <div class="bio-item"><b>Tanggal Lahir :</b> ${document.getElementById('tanggalLahir').value}</div>
+        <div class="bio-item"><b>Umur :</b> ${document.getElementById('umur').value}</div>
+        <div class="bio-item"><b>WhatsApp :</b> ${document.getElementById('wa').value}</div>
+        <div class="bio-item"><b>Email :</b> ${document.getElementById('email').value}</div>
+        <div class="bio-item"><b>Alamat :</b> ${document.getElementById('alamat').value}</div>
+        <div class="bio-item"><b>Kota/Provinsi :</b> ${document.getElementById('kota').value}</div>
+        <div class="bio-item"><b>Category :</b> ${document.getElementById('category').value}</div>
+        <div class="bio-item"><b>Size Jersey :</b> ${document.getElementById('size').value}</div>
+        <div class="bio-item"><b>Pengalaman Event :</b> ${document.getElementById('pengalaman').value || '-'}</div>
+        <div class="bio-item"><b>Komunitas :</b> ${document.getElementById('komunitas').value || '-'}</div>
+    `;
+
+    document.getElementById('bioData').innerHTML = html;
+}
+
+// ================= BERANDA =================
+
+function goHome(){
+
+    location.reload();
+}
+
+</script>
+
+</body>
+</html>
