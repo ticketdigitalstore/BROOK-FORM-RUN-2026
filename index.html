@@ -20,6 +20,7 @@ background:linear-gradient(135deg,#081b29,#0f3d5e,#0a2239);
 min-height:100vh;
 color:white;
 padding:20px;
+overflow-x:hidden;
 }
 
 .container{
@@ -51,16 +52,29 @@ color:#ffe600;
 .page{
 display:none;
 padding:30px;
+animation:fade .4s ease;
 }
 
 .page.active{
 display:block;
 }
 
+@keyframes fade{
+from{
+opacity:0;
+transform:translateX(30px);
+}
+to{
+opacity:1;
+transform:translateX(0);
+}
+}
+
 .banner{
 width:100%;
 border-radius:18px;
 margin-bottom:25px;
+border:2px solid rgba(255,255,255,0.15);
 }
 
 .input-group{
@@ -122,6 +136,11 @@ border-radius:16px;
 font-size:16px;
 font-weight:700;
 cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-2px);
 }
 
 .btn-back{
@@ -137,6 +156,7 @@ color:#081b29;
 button:disabled{
 opacity:0.5;
 cursor:not-allowed;
+transform:none;
 }
 
 .qris-box{
@@ -145,6 +165,7 @@ padding:20px;
 border-radius:20px;
 text-align:center;
 margin-bottom:20px;
+background:rgba(255,255,255,0.06);
 }
 
 .qris-box img{
@@ -160,10 +181,17 @@ margin:15px 0;
 display:flex;
 gap:10px;
 margin-top:20px;
+align-items:flex-start;
 }
 
 .success-box{
 text-align:center;
+}
+
+.success-box h2{
+font-size:32px;
+margin-bottom:15px;
+color:#00ffae;
 }
 
 .bio{
@@ -172,6 +200,7 @@ background:rgba(255,255,255,0.08);
 padding:20px;
 border-radius:18px;
 text-align:left;
+line-height:1.8;
 }
 
 .loading-screen{
@@ -216,17 +245,32 @@ color:#00f7ff;
 
 .loading-sub{
 margin-top:10px;
+font-size:18px;
+}
+
+.failed{
+text-align:center;
+padding:60px 20px;
+}
+
+.failed h1{
+font-size:40px;
+color:#ff4040;
+margin-bottom:20px;
 }
 
 @media(max-width:768px){
+
 .button-group{
 flex-direction:column;
 }
+
 }
 </style>
 </head>
 <body>
 
+<!-- LOADING -->
 <div class="loading-screen" id="loadingScreen">
 <div class="loader"></div>
 <div class="loading-text">MOHON TUNGGU...</div>
@@ -240,6 +284,7 @@ Mengalihkan ke halaman beranda dalam
 
 <div class="header">
 <h1>BROOK FRAM ALMOND RUN</h1>
+
 <div class="timer">
 Sisa Waktu Pengisian :
 <span id="countdown">10:00</span>
@@ -258,9 +303,17 @@ Sisa Waktu Pengisian :
 
 <div class="input-group">
 <label>Jenis Kelamin</label>
+
 <div class="radio-group">
-<label><input type="radio" name="gender">Laki-laki</label>
-<label><input type="radio" name="gender">Perempuan</label>
+<label>
+<input type="radio" name="gender">
+Laki-laki
+</label>
+
+<label>
+<input type="radio" name="gender">
+Perempuan
+</label>
 </div>
 </div>
 
@@ -300,13 +353,16 @@ Sisa Waktu Pengisian :
 </div>
 
 <div class="input-group">
-<label>Upload KTP</label>
-<input type="file" id="ktp">
+<label>Upload KTP / Kartu Pelajar</label>
+<input type="file" id="ktp" accept="image/*,.pdf">
 </div>
 
 <div class="button-group">
 <button class="btn-back" disabled>Kembali</button>
-<button class="btn-next" id="next1" disabled>Selanjutnya</button>
+
+<button class="btn-next" id="next1" disabled>
+Selanjutnya
+</button>
 </div>
 
 </div>
@@ -318,27 +374,56 @@ Sisa Waktu Pengisian :
 
 <div class="input-group">
 <label>Category</label>
+
 <select id="category">
-<option value="">Pilih</option>
+<option value="">Pilih Category</option>
 <option>5K</option>
 <option>10K</option>
 </select>
 </div>
 
+<img src="size-chart.png" class="banner">
+
 <div class="input-group">
 <label>Size Jersey</label>
+
 <select id="size">
-<option value="">Pilih</option>
+<option value="">Pilih Size</option>
+<option>XS</option>
 <option>S</option>
 <option>M</option>
 <option>L</option>
 <option>XL</option>
+<option>XXL</option>
+<option>XXXL</option>
 </select>
 </div>
 
+<div class="input-group">
+<label>Apakah Pernah Mengikuti Event Lari Sebelumnya</label>
+
+<select id="pengalaman">
+<option value="">Pilih</option>
+<option>Pernah</option>
+<option>Tidak Pernah</option>
+</select>
+</div>
+
+<div class="input-group">
+<label>Nama Komunitas Lari</label>
+<input type="text" id="komunitas">
+</div>
+
 <div class="button-group">
-<button class="btn-back" onclick="showPage(1)">Kembali</button>
-<button class="btn-next" id="next2" disabled>Selanjutnya</button>
+
+<button class="btn-back" onclick="showPage(1)">
+Kembali
+</button>
+
+<button class="btn-next" id="next2" disabled>
+Selanjutnya
+</button>
+
 </div>
 
 </div>
@@ -346,27 +431,47 @@ Sisa Waktu Pengisian :
 <!-- PAGE 3 -->
 <div class="page" id="page3">
 
+<img src="Fee.png" class="banner">
+
 <div class="qris-box">
+
 <h2>PEMBAYARAN QRIS</h2>
 
 <img src="qris-pembayaran.png">
 
-<p>Silahkan upload bukti pembayaran</p>
+<p>
+Silahkan scan QRIS untuk melakukan pembayaran
+sesuai category yang dipilih.
+</p>
+
 </div>
 
 <div class="input-group">
 <label>Upload Bukti Pembayaran</label>
-<input type="file" id="bukti">
+<input type="file" id="bukti" accept="image/*,.pdf">
 </div>
 
 <div class="checkbox">
+
 <input type="checkbox" id="setuju">
-<label>Saya setuju dengan syarat event</label>
+
+<label>
+Saya menyatakan bahwa seluruh data yang saya isi benar
+dan siap mengikuti seluruh aturan event.
+</label>
+
 </div>
 
 <div class="button-group">
-<button class="btn-back" onclick="showPage(2)">Kembali</button>
-<button class="btn-next" id="daftarBtn" disabled>DAFTAR</button>
+
+<button class="btn-back" onclick="showPage(2)">
+Kembali
+</button>
+
+<button class="btn-next" id="daftarBtn" disabled>
+DAFTAR
+</button>
+
 </div>
 
 </div>
@@ -378,13 +483,34 @@ Sisa Waktu Pengisian :
 
 <h2>TERIMA KASIH!</h2>
 
-<p>Pendaftaran berhasil diproses.</p>
+<p>
+Formulir pendaftaran Anda berhasil dikirim.
+</p>
 
 <div class="bio" id="bioData"></div>
 
-<div class="button-group">
-<button class="btn-next" onclick="goHome()">BERANDA</button>
+<div class="button-group" style="margin-top:30px;">
+
+<button class="btn-next" onclick="goHome()">
+BERANDA
+</button>
+
 </div>
+
+</div>
+
+</div>
+
+<!-- FAILED -->
+<div class="page" id="failedPage">
+
+<div class="failed">
+
+<h1>REGISTRASI FAILED</h1>
+
+<p>
+Waktu pengisian formulir telah melebihi 10 menit.
+</p>
 
 </div>
 
@@ -404,26 +530,37 @@ document.getElementById('page'+page).classList.add('active');
 
 }
 
+// ================= TIMER =================
+
 let duration = 600;
 
 const countdown = document.getElementById('countdown');
 
 const timer = setInterval(()=>{
 
-let minutes = Math.floor(duration/60);
-let seconds = duration%60;
+let minutes = Math.floor(duration / 60);
+let seconds = duration % 60;
 
 countdown.innerHTML =
 `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
 
-duration--;
+if(duration <= 0){
 
-if(duration < 0){
 clearInterval(timer);
-alert("Waktu habis");
+
+document.querySelectorAll('.page').forEach(el=>{
+el.classList.remove('active');
+});
+
+document.getElementById('failedPage').classList.add('active');
+
 }
 
+duration--;
+
 },1000);
+
+// ================= VALIDASI PAGE 1 =================
 
 function validatePage1(){
 
@@ -441,9 +578,11 @@ const inputs = [
 let valid = true;
 
 inputs.forEach(id=>{
+
 if(document.getElementById(id).value.trim() === ''){
 valid = false;
 }
+
 });
 
 if(document.getElementById('ktp').files.length === 0){
@@ -458,14 +597,21 @@ document.getElementById('next1').disabled = !valid;
 
 }
 
-document.querySelectorAll('#page1 input, #page1 textarea').forEach(el=>{
+document.querySelectorAll('#page1 input, #page1 textarea')
+.forEach(el=>{
+
 el.addEventListener('input', validatePage1);
 el.addEventListener('change', validatePage1);
+
 });
 
 document.getElementById('next1').onclick = function(){
+
 showPage(2);
+
 };
+
+// ================= VALIDASI PAGE 2 =================
 
 function validatePage2(){
 
@@ -480,12 +626,19 @@ document.getElementById('next2').disabled =
 
 }
 
-document.getElementById('category').addEventListener('change', validatePage2);
-document.getElementById('size').addEventListener('change', validatePage2);
+document.getElementById('category')
+.addEventListener('change', validatePage2);
+
+document.getElementById('size')
+.addEventListener('change', validatePage2);
 
 document.getElementById('next2').onclick = function(){
+
 showPage(3);
+
 };
+
+// ================= VALIDASI PAGE 3 =================
 
 function validatePage3(){
 
@@ -500,26 +653,47 @@ document.getElementById('daftarBtn').disabled =
 
 }
 
-document.getElementById('bukti').addEventListener('change', validatePage3);
-document.getElementById('setuju').addEventListener('change', validatePage3);
+document.getElementById('bukti')
+.addEventListener('change', validatePage3);
+
+document.getElementById('setuju')
+.addEventListener('change', validatePage3);
 
 document.getElementById('daftarBtn').onclick = function(){
 
 document.getElementById('bioData').innerHTML = `
-<b>Nama:</b> ${document.getElementById('nama').value}<br><br>
-<b>Email:</b> ${document.getElementById('email').value}<br><br>
-<b>WhatsApp:</b> ${document.getElementById('wa').value}<br><br>
-<b>Category:</b> ${document.getElementById('category').value}<br><br>
-<b>Size:</b> ${document.getElementById('size').value}
+
+<b>Nama:</b>
+${document.getElementById('nama').value}
+<br><br>
+
+<b>Email:</b>
+${document.getElementById('email').value}
+<br><br>
+
+<b>WhatsApp:</b>
+${document.getElementById('wa').value}
+<br><br>
+
+<b>Category:</b>
+${document.getElementById('category').value}
+<br><br>
+
+<b>Size Jersey:</b>
+${document.getElementById('size').value}
+
 `;
 
 showPage(4);
 
 };
 
+// ================= BERANDA =================
+
 function goHome(){
 
-const loading = document.getElementById('loadingScreen');
+const loading =
+document.getElementById('loadingScreen');
 
 loading.classList.add('active');
 
