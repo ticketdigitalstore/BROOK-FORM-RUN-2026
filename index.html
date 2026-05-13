@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -259,6 +260,33 @@ color:#ff4040;
 margin-bottom:20px;
 }
 
+.payment-box{
+margin-bottom:20px;
+padding:18px;
+border-radius:18px;
+background:linear-gradient(90deg,#00ffae,#00c6ff);
+color:#081b29;
+text-align:center;
+box-shadow:0 0 20px rgba(0,255,174,0.4);
+}
+
+.payment-title{
+font-size:16px;
+font-weight:700;
+}
+
+.payment-amount{
+font-size:34px;
+font-weight:800;
+margin-top:5px;
+}
+
+.payment-note{
+margin-top:8px;
+font-size:14px;
+font-weight:700;
+}
+
 @media(max-width:768px){
 
 .button-group{
@@ -266,29 +294,38 @@ flex-direction:column;
 }
 
 }
+
 </style>
 </head>
 <body>
 
 <!-- LOADING -->
 <div class="loading-screen" id="loadingScreen">
+
 <div class="loader"></div>
-<div class="loading-text">MOHON TUNGGU...</div>
+
+<div class="loading-text">
+MOHON TUNGGU...
+</div>
+
 <div class="loading-sub">
 Mengalihkan ke halaman beranda dalam
 <span id="loadingCount">10</span> detik
 </div>
+
 </div>
 
 <div class="container">
 
 <div class="header">
-<h1>BROOK FRAM ALMOND RUN</h1>
+
+<h1>BROOK FARM ALMOND RUN</h1>
 
 <div class="timer">
 Sisa Waktu Pengisian :
 <span id="countdown">10:00</span>
 </div>
+
 </div>
 
 <!-- PAGE 1 -->
@@ -302,9 +339,11 @@ Sisa Waktu Pengisian :
 </div>
 
 <div class="input-group">
+
 <label>Jenis Kelamin</label>
 
 <div class="radio-group">
+
 <label>
 <input type="radio" name="gender">
 Laki-laki
@@ -314,7 +353,9 @@ Laki-laki
 <input type="radio" name="gender">
 Perempuan
 </label>
+
 </div>
+
 </div>
 
 <div class="input-group">
@@ -358,11 +399,15 @@ Perempuan
 </div>
 
 <div class="button-group">
-<button class="btn-back" disabled>Kembali</button>
+
+<button class="btn-back" disabled>
+Kembali
+</button>
 
 <button class="btn-next" id="next1" disabled>
 Selanjutnya
 </button>
+
 </div>
 
 </div>
@@ -370,9 +415,12 @@ Selanjutnya
 <!-- PAGE 2 -->
 <div class="page" id="page2">
 
-<h2 style="margin-bottom:20px;">CATEGORY LARI</h2>
+<h2 style="margin-bottom:20px;">
+CATEGORY LARI
+</h2>
 
 <div class="input-group">
+
 <label>Category</label>
 
 <select id="category">
@@ -380,11 +428,13 @@ Selanjutnya
 <option>5K</option>
 <option>10K</option>
 </select>
+
 </div>
 
 <img src="size-chart.png" class="banner">
 
 <div class="input-group">
+
 <label>Size Jersey</label>
 
 <select id="size">
@@ -397,16 +447,21 @@ Selanjutnya
 <option>XXL</option>
 <option>XXXL</option>
 </select>
+
 </div>
 
 <div class="input-group">
-<label>Apakah Pernah Mengikuti Event Lari Sebelumnya</label>
+
+<label>
+Apakah Pernah Mengikuti Event Lari Sebelumnya
+</label>
 
 <select id="pengalaman">
 <option value="">Pilih</option>
 <option>Pernah</option>
 <option>Tidak Pernah</option>
 </select>
+
 </div>
 
 <div class="input-group">
@@ -433,6 +488,23 @@ Selanjutnya
 
 <img src="Fee.png" class="banner">
 
+<!-- PAYMENT INFO -->
+<div class="payment-box">
+
+<div class="payment-title">
+TOTAL PEMBAYARAN
+</div>
+
+<div class="payment-amount" id="paymentAmount">
+Rp0
+</div>
+
+<div class="payment-note">
+Harga Mengikuti NORMAL PRICE
+</div>
+
+</div>
+
 <div class="qris-box">
 
 <h2>PEMBAYARAN QRIS</h2>
@@ -447,8 +519,11 @@ sesuai category yang dipilih.
 </div>
 
 <div class="input-group">
+
 <label>Upload Bukti Pembayaran</label>
+
 <input type="file" id="bukti" accept="image/*,.pdf">
+
 </div>
 
 <div class="checkbox">
@@ -520,13 +595,16 @@ Waktu pengisian formulir telah melebihi 10 menit.
 
 <script>
 
+// ================= PAGE =================
+
 function showPage(page){
 
 document.querySelectorAll('.page').forEach(el=>{
 el.classList.remove('active');
 });
 
-document.getElementById('page'+page).classList.add('active');
+document.getElementById('page'+page)
+.classList.add('active');
 
 }
 
@@ -534,11 +612,13 @@ document.getElementById('page'+page).classList.add('active');
 
 let duration = 600;
 
-const countdown = document.getElementById('countdown');
+const countdown =
+document.getElementById('countdown');
 
 const timer = setInterval(()=>{
 
 let minutes = Math.floor(duration / 60);
+
 let seconds = duration % 60;
 
 countdown.innerHTML =
@@ -548,11 +628,13 @@ if(duration <= 0){
 
 clearInterval(timer);
 
-document.querySelectorAll('.page').forEach(el=>{
+document.querySelectorAll('.page')
+.forEach(el=>{
 el.classList.remove('active');
 });
 
-document.getElementById('failedPage').classList.add('active');
+document.getElementById('failedPage')
+.classList.add('active');
 
 }
 
@@ -579,21 +661,30 @@ let valid = true;
 
 inputs.forEach(id=>{
 
-if(document.getElementById(id).value.trim() === ''){
+if(document.getElementById(id)
+.value.trim() === ''){
+
 valid = false;
+
 }
 
 });
 
-if(document.getElementById('ktp').files.length === 0){
+if(document.getElementById('ktp')
+.files.length === 0){
+
 valid = false;
+
 }
 
 if(!document.querySelector('input[name="gender"]:checked')){
+
 valid = false;
+
 }
 
-document.getElementById('next1').disabled = !valid;
+document.getElementById('next1')
+.disabled = !valid;
 
 }
 
@@ -601,11 +692,13 @@ document.querySelectorAll('#page1 input, #page1 textarea')
 .forEach(el=>{
 
 el.addEventListener('input', validatePage1);
+
 el.addEventListener('change', validatePage1);
 
 });
 
-document.getElementById('next1').onclick = function(){
+document.getElementById('next1')
+.onclick = function(){
 
 showPage(2);
 
@@ -627,29 +720,66 @@ document.getElementById('next2').disabled =
 }
 
 document.getElementById('category')
-.addEventListener('change', validatePage2);
+.addEventListener('change', ()=>{
+
+validatePage2();
+updatePayment();
+
+});
 
 document.getElementById('size')
 .addEventListener('change', validatePage2);
 
-document.getElementById('next2').onclick = function(){
+document.getElementById('next2')
+.onclick = function(){
 
 showPage(3);
 
 };
+
+// ================= UPDATE PAYMENT =================
+
+function updatePayment(){
+
+const category =
+document.getElementById('category').value;
+
+const paymentAmount =
+document.getElementById('paymentAmount');
+
+let harga = '0';
+
+// NORMAL PRICE
+if(category === '5K'){
+
+harga = '250.000';
+
+}
+
+else if(category === '10K'){
+
+harga = '350.000';
+
+}
+
+paymentAmount.innerHTML = 'Rp' + harga;
+
+}
 
 // ================= VALIDASI PAGE 3 =================
 
 function validatePage3(){
 
 let bukti =
-document.getElementById('bukti').files.length > 0;
+document.getElementById('bukti')
+.files.length > 0;
 
 let setuju =
-document.getElementById('setuju').checked;
+document.getElementById('setuju')
+.checked;
 
-document.getElementById('daftarBtn').disabled =
-!(bukti && setuju);
+document.getElementById('daftarBtn')
+.disabled = !(bukti && setuju);
 
 }
 
@@ -659,9 +789,11 @@ document.getElementById('bukti')
 document.getElementById('setuju')
 .addEventListener('change', validatePage3);
 
-document.getElementById('daftarBtn').onclick = function(){
+document.getElementById('daftarBtn')
+.onclick = function(){
 
-document.getElementById('bioData').innerHTML = `
+document.getElementById('bioData')
+.innerHTML = `
 
 <b>Nama:</b>
 ${document.getElementById('nama').value}
@@ -681,6 +813,10 @@ ${document.getElementById('category').value}
 
 <b>Size Jersey:</b>
 ${document.getElementById('size').value}
+<br><br>
+
+<b>Total Pembayaran:</b>
+${document.getElementById('paymentAmount').innerHTML}
 
 `;
 
