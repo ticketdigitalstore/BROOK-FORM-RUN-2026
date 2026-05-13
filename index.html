@@ -300,6 +300,53 @@ button:disabled{
     font-size:18px;
 }
 
+/* LOADING SCREEN */
+.loading-screen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.92);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:99999;
+}
+
+.loading-screen.active{
+    display:flex;
+}
+
+.loader{
+    width:90px;
+    height:90px;
+    border:8px solid rgba(255,255,255,0.2);
+    border-top:8px solid #00f7ff;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin-bottom:25px;
+}
+
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+.loading-text{
+    font-size:22px;
+    font-weight:700;
+    color:#00f7ff;
+    margin-bottom:10px;
+}
+
+.loading-sub{
+    font-size:18px;
+    color:white;
+}
+
 @media(max-width:768px){
     .button-group{
         flex-direction:column;
@@ -308,6 +355,16 @@ button:disabled{
 </style>
 </head>
 <body>
+
+<!-- LOADING -->
+<div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+    <div class="loading-text">MOHON TUNGGU...</div>
+    <div class="loading-sub">
+        Mengalihkan ke halaman beranda dalam
+        <span id="loadingCount">10</span> detik
+    </div>
+</div>
 
 <div class="container" id="mainContainer">
 
@@ -395,8 +452,6 @@ button:disabled{
                 <option value="">Pilih Category</option>
                 <option>5K</option>
                 <option>10K</option>
-                <option>Half Marathon</option>
-                <option>Marathon</option>
             </select>
         </div>
 
@@ -646,52 +701,79 @@ function validatePage3(){
         !(bukti && setuju);
 }
 
-document.querySelectorAll('#page3 input')
-.forEach(el=>{
-    el.addEventListener('change',validatePage3);
-});
+document.getElementById('bukti')
+.addEventListener('change',validatePage3);
+
+document.getElementById('setuju')
+.addEventListener('change',validatePage3);
+
+// ================= DAFTAR =================
 
 document.getElementById('daftarBtn')
 .addEventListener('click',()=>{
 
-    generateBio();
-
-    nextPage(4);
-});
-
-// ================= GENERATE BIODATA =================
-
-function generateBio(){
-
     const gender =
-        document.querySelector('input[name="gender"]:checked').value;
+        document.querySelector('input[name="gender"]:checked')?.value || '-';
 
-    const html = `
-        <h3 style="margin-bottom:20px;">BIODATA PESERTA</h3>
-
+    const bioHTML = `
         <div class="bio-item"><b>Nama :</b> ${document.getElementById('nama').value}</div>
-        <div class="bio-item"><b>Jenis Kelamin :</b> ${gender}</div>
+        <div class="bio-item"><b>Gender :</b> ${gender}</div>
         <div class="bio-item"><b>Tempat Lahir :</b> ${document.getElementById('tempatLahir').value}</div>
         <div class="bio-item"><b>Tanggal Lahir :</b> ${document.getElementById('tanggalLahir').value}</div>
         <div class="bio-item"><b>Umur :</b> ${document.getElementById('umur').value}</div>
         <div class="bio-item"><b>WhatsApp :</b> ${document.getElementById('wa').value}</div>
         <div class="bio-item"><b>Email :</b> ${document.getElementById('email').value}</div>
         <div class="bio-item"><b>Alamat :</b> ${document.getElementById('alamat').value}</div>
-        <div class="bio-item"><b>Kota/Provinsi :</b> ${document.getElementById('kota').value}</div>
+        <div class="bio-item"><b>Kota :</b> ${document.getElementById('kota').value}</div>
         <div class="bio-item"><b>Category :</b> ${document.getElementById('category').value}</div>
         <div class="bio-item"><b>Size Jersey :</b> ${document.getElementById('size').value}</div>
-        <div class="bio-item"><b>Pengalaman Event :</b> ${document.getElementById('pengalaman').value || '-'}</div>
-        <div class="bio-item"><b>Komunitas :</b> ${document.getElementById('komunitas').value || '-'}</div>
     `;
 
-    document.getElementById('bioData').innerHTML = html;
-}
+    document.getElementById('bioData').innerHTML = bioHTML;
 
-// ================= BERANDA =================
+    nextPage(4);
+});
+
+// ================= BERANDA LOADING 10 DETIK =================
 
 function goHome(){
 
-    location.reload();
+    const loadingScreen =
+        document.getElementById('loadingScreen');
+
+    const loadingCount =
+        document.getElementById('loadingCount');
+
+    loadingScreen.classList.add('active');
+
+    let seconds = 10;
+
+    loadingCount.innerText = seconds;
+
+    const loadingTimer = setInterval(()=>{
+
+        seconds--;
+
+        loadingCount.innerText = seconds;
+
+        if(seconds <= 0){
+
+            clearInterval(loadingTimer);
+
+            // REDIRECT KE PAGE 1
+            showPage(1);
+
+            // HAPUS LOADING
+            loadingScreen.classList.remove('active');
+
+            // SCROLL KE ATAS
+            window.scrollTo({
+                top:0,
+                behavior:'smooth'
+            });
+        }
+
+    },1000);
 }
 
 </script>
